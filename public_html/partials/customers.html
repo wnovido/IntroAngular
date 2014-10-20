@@ -1,0 +1,14 @@
+<div>         
+    <h5>List of Customers</h5>
+    Search: <input type="text" ng-model="cust_src"/>
+    <br/>
+    <ul>
+        <li ng-repeat="cust in customers | filter:cust_src">{{cust.name | uppercase}} >> {{cust.code}}</li>
+    </ul>
+    <br/>
+    <h5>New Customer</h5>
+    Name: <input type="text" ng-model="newCustomer.name"/>
+    Code: <input type="text" ng-model="newCustomer.code"/>
+    <button ng-click="addCustomer()">Add Customer</button>
+    
+</div>
