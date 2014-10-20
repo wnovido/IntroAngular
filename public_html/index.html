@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html ng-app="">
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div>
+            Hello:
+            <input type="text" ng-model="name"/>
+            <p><strong>Hello {{ name }}</strong></p>
+        </div>
+        <div ng-controller="BasicController">
+            <ul>
+                <li ng-repeat="pet in animals">{{pet}}</li>
+            </ul>
+            <br>
+            Search: <input type="text" ng-model="cust_src"/>
+            <br>
+            <ul>
+                <li ng-repeat="cust in customers | filter:cust_src">{{cust.name | uppercase}} >> {{cust.code}}</li>
+            </ul>
+              
+        </div>
+        <script type="text/javascript">
+            function BasicController($scope){
+                $scope.customers = [{name:'Josh Smith', code:'DX1012'},{name:'Michael Carl', code:'XX2033'},{name:'John Doe', code:'YY2301'},{name:'Mick Conan', code:'YY2302'},{name:'Arnold Stuart', code:'DF3402'}];
+                $scope.animals = ['dog','cat','turtle','lion','falcon'];
+            }
+        </script>
+        <script type="text/javascript" src="js/libs/angular.js/angular.js"></script>        
+    </body>
+</html>
