@@ -19,10 +19,25 @@ and open the template in the editor.
                 $routeProvider.otherwise({redirectTo: '/customers'});
             });
             
-            function BasicController($scope) {
-                $scope.customers = [{name:'Josh Smith', code:'DX1012'},{name:'Michael Carl', code:'XX2033'},{name:'John Doe', code:'YY2301'},{name:'Mick Conan', code:'YY2302'},{name:'Arnold Stuart', code:'DF3402'}];
+            myApplication.factory('dataFactory', function() {
+                var customers = [{name:'Josh Smith', code:'DX1012'},{name:'Michael Carl', code:'XX2033'},{name:'John Doe', code:'YY2301'},{name:'Mick Conan', code:'YY2302'},{name:'Arnold Stuart', code:'DF3402'}];
+                var objFactory = {};
+                
+                objFactory.getCustomers = function() {
+                    return customers;
+                };
+                
+                objFactory.pushCustomer = function(customer) {
+                    customers.push(customer);
+                };
+                
+                return objFactory;
+            });
+            
+            function BasicController($scope, dataFactory) {                
+                $scope.customers = dataFactory.getCustomers();
                 $scope.addCustomer = function() {
-                    $scope.customers.push($scope.newCustomer);
+                    dataFactory.pushCustomer($scope.newCustomer);
                     $scope.newCustomer = {};
                 };
             }
