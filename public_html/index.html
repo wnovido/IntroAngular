@@ -4,36 +4,35 @@ To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
-<html ng-app="">
-    <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
+<html ng-app="myApplication">
     <body>
-        <div>
-            Hello:
-            <input type="text" ng-model="name"/>
-            <p><strong>Hello {{ name }}</strong></p>
-        </div>
-        <div ng-controller="BasicController">
-            <ul>
-                <li ng-repeat="pet in animals">{{pet}}</li>
-            </ul>
-            <br>
-            Search: <input type="text" ng-model="cust_src"/>
-            <br>
-            <ul>
-                <li ng-repeat="cust in customers | filter:cust_src">{{cust.name | uppercase}} >> {{cust.code}}</li>
-            </ul>
-              
-        </div>
+        <div ng-view=""></div>
+        <script type="text/javascript" src="js/libs/angular.js/angular.js"></script>
+        <script type="text/javascript" src="js/libs/angular.js/angular-route.js"></script>
+        
         <script type="text/javascript">
-            function BasicController($scope){
+            var myApplication = angular.module('myApplication',['ngRoute']);
+            
+            myApplication.config(function ($routeProvider) {
+                $routeProvider.when('/customers', {templateUrl: 'partials/customers.html', controller: 'BasicController'});
+                $routeProvider.when('/animals', {templateUrl: 'partials/animals.html', controller: 'AnimalController'});
+                $routeProvider.otherwise({redirectTo: '/customers'});
+            });
+            
+            function BasicController($scope) {
                 $scope.customers = [{name:'Josh Smith', code:'DX1012'},{name:'Michael Carl', code:'XX2033'},{name:'John Doe', code:'YY2301'},{name:'Mick Conan', code:'YY2302'},{name:'Arnold Stuart', code:'DF3402'}];
+                $scope.addCustomer = function() {
+                    $scope.customers.push($scope.newCustomer);
+                    $scope.newCustomer = {};
+                };
+            }
+            
+            function AnimalController($scope) {
                 $scope.animals = ['dog','cat','turtle','lion','falcon'];
             }
+            
+            myApplication.controller('BasicController',BasicController);
+            myApplication.controller('AnimalController',AnimalController);
         </script>
-        <script type="text/javascript" src="js/libs/angular.js/angular.js"></script>        
     </body>
 </html>
